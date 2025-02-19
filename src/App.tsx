@@ -5,18 +5,24 @@ import Dashboard from "./pages/Dashboard"
 import Student from "./pages/Student"
 import Teacher from "./pages/Teacher"
 import Payment from "./pages/Payment"
+import {Login} from "./pages/Login"
+
 
 
 function App() {
     const routes = createBrowserRouter([
         {
+            path:'/',
+            element:<Login />
+        },
+        {
             path: "",
             element: <RootLayout />,
             children: [
-                { path: "", element: <Dashboard /> },
-                { path: "", element:<Student />},
-                { path: "", element:<Teacher />},
-                { path: "", element:<Payment />}
+                { path: "/dashboard", element: <Dashboard /> },
+                { path: "/student", element:<Student />},
+                { path: "/teacher", element:<Teacher />},
+                { path: "/payment", element:<Payment />}
             ]
         }
     ])
