@@ -5,7 +5,7 @@ import {
     addStudent,
     deleteStudent,
     deletedStudent,
-    getStudent,
+    getStudents,
     saveStudent,
     updateStudent,
     updatedStudent
@@ -13,14 +13,28 @@ import {
 import {StudentModel} from "../models/StudentModel.ts";
 import {AppDispatch} from "../store/Store.ts";
 
-function Student(){
-
-
+function Student() {
+    // const [customers, setCustomers] = useState([
+    //   {
+    //     id: "C001",
+    //     name: "John Doe",
+    //     nic: "123456789V",
+    //     email: "john@example.com",
+    //     phone: "1234567890"
+    //   },
+    //   {
+    //     id: "C002",
+    //     name: "Jane Smith",
+    //     nic: "987654321X",
+    //     email: "jane@example.com",
+    //     phone: "0987654321"
+    //   }
+    // ])
     const dispatch = useDispatch<AppDispatch>();
     const students = useSelector(state => state.students);
 
     useEffect(() => {
-        dispatch(getStudent());
+        dispatch(getStudents());
     }, [dispatch]);
 
     const [id, setId] = useState("")
@@ -35,12 +49,11 @@ function Student(){
             alert("All fields are required!")
             return
         }
-
+        // setCustomers([...customers, { id, name, nic, email, phone }])
         const newStudent = new StudentModel(name, nic, email, phone);
-
+        // dispatch(addCustomer(newCustomer));
         dispatch(saveStudent(newStudent));
-        alert("student added successfully!")
-
+        //alert("customer added successfully!")
         resetForm();
 
     }
@@ -55,21 +68,24 @@ function Student(){
     }
 
     const handleUpdate = () => {
-        if (!id || !name || !nic || !email || !phone) {
-            alert("All fields are required!")
-            return
+        if (!name || !nic || !email || !phone) {
+            alert("All fields are required!");
+            return;
         }
-        const updatestu = new StudentModel(name, nic, email, phone);
-        dispatch(updatedStudent(email,updatestu));
-        alert("Successfully Updated");
 
-        resetForm();
+        const updateCust = new StudentModel(name, nic, email, phone);
+
+        dispatch(updatedStudent({ email, student: updateCust }))
+            .then(() => {
+                resetForm();
+            })
+            .catch((error) => {
+                console.error("Error updating customer:", error.message);
+            });
     }
 
     const handleDelete = (studentEmail: string) => {
-        if (window.confirm("Are you sure you want to delete this student?")) {
-            dispatch(deletedStudent(studentEmail));
-        }
+        dispatch(deletedStudent(studentEmail));
     }
 
     const resetForm = () => {
@@ -84,14 +100,14 @@ function Student(){
     return (
         <div className="p-6">
             <div className="grid grid-cols-2 gap-4 mb-4">
-                <input
-                    type="text"
-                    name="id"
-                    placeholder="ID"
-                    value={id}
-                    onChange={(e) => setId(e.target.value)}
-                    className="border p-2 rounded"
-                />
+                {/*<input*/}
+                {/*    type="text"*/}
+                {/*    name="id"*/}
+                {/*    placeholder="ID"*/}
+                {/*    value={id}*/}
+                {/*    onChange={(e) => setId(e.target.value)}*/}
+                {/*    className="border p-2 rounded"*/}
+                {/*/>*/}
                 <input
                     type="text"
                     name="name"
@@ -162,23 +178,23 @@ function Student(){
                 </tr>
                 </thead>
                 <tbody>
-                {students.map((student: StudentModel) => (
+                {students.map((customer: StudentModel) => (
                     <tr
-                        key={student.email}
-                        onClick={() => handleEdit(student)}
+                        key={customer.email}
+                        onClick={() => handleEdit(customer)}
                         className="hover:cursor-pointer hover:bg-slate-600 hover:text-white"
                     >
-                        <td className="border px-4 py-2">{student.id}</td>
-                        <td className="border px-4 py-2">{student.name}</td>
-                        <td className="border px-4 py-2">{student.nic}</td>
-                        <td className="border px-4 py-2">{student.email}</td>
-                        <td className="border px-4 py-2">{student.phone}</td>
+                        <td className="border px-4 py-2">{customer.id}</td>
+                        <td className="border px-4 py-2">{customer.name}</td>
+                        <td className="border px-4 py-2">{customer.nic}</td>
+                        <td className="border px-4 py-2">{customer.email}</td>
+                        <td className="border px-4 py-2">{customer.phone}</td>
                         <td className="border px-4 py-2 text-center">
                             <button
-                                onClick={() => handleDelete(student.email)}
+                                onClick={() => handleDelete(customer.email)}
                                 className="bg-red-500 text-white p-2 rounded-lg"
                             >
-                                <Trash2/>
+                                <Trash2 />
                             </button>
                         </td>
                     </tr>
@@ -186,9 +202,7 @@ function Student(){
                 </tbody>
             </table>
         </div>
-
     )
-
 }
 
-export default Student;
+export default Student
