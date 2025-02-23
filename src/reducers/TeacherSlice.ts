@@ -48,4 +48,18 @@ export const updatedTeacher = createAsyncThunk(
     }
 );
 
+export const deletedTeacher = createAsyncThunk(
+    "teacher/deleteTeacher",
+    async (email: string, { dispatch, rejectWithValue }) => {
+        try {
+            await api.delete(`/Teacher/delete/${email}`);
+            dispatch(getTeachers()); // Fetch updated teacher list
+            return email;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data || "Failed to delete teacher");
+        }
+    }
+);
+
+
 
