@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TeacherModel } from "../models/TeacherModel.ts.ts";
+import { TeacherModel } from "../models/TeacherModel.ts";
 import axios from "axios";
-import {StudentModel} from "../models/StudentModel.ts";
-import {getStudents} from "./StudentSlice.ts";
 
 const initialState: TeacherModel[] = [];
 
@@ -60,6 +58,44 @@ export const deletedTeacher = createAsyncThunk(
         }
     }
 );
+const TeacherSlice = createSlice({
+    name: "teacher",
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            //  Fetch customers
+            .addCase(getTeachers.fulfilled, (_, action) => action.payload)
+            .addCase(getTeachers.rejected, (state, action) => {
+                console.error("Error fetching teacher:", action.payload);
+            })
 
+            //  Save customer
+            .addCase(saveTeacher.fulfilled, (state, action) => {
+                state.push(action.payload);
+            })
+            .addCase(saveTeacher.rejected, (state, action) => {
+                console.error("Error saving teacher:", action.payload);
+            })
 
+            //  Update customer
+            .addCase(updatedTeacher.fulfilled, (state, action) => {
+                const index = state.findIndex((c) => c.email === action.payload.email);
+                if (index >= 0) state[index] = action.payload;
+            })
+
+            .addCase(updatedTeacher.rejected, (state, action) => {
+                console.error("Error updating teacher:", action.payload);
+            })
+
+            //  Delete customer
+            .addCase(deletedTeacher.fulfilled, (state, action) => {
+                return state.filter((teacher) => teacher.email !== action.payload);
+            })
+            .addCase(deletedTeacher.rejected, (state, action) => {
+                console.error("Error deleting teacher:", action.payload);
+            });
+    },
+});
+export default TeacherSlice.reducer;
 
