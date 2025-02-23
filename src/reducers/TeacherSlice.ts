@@ -35,3 +35,17 @@ export const saveTeacher = createAsyncThunk(
     }
 );
 
+export const updatedTeacher = createAsyncThunk(
+    "teacher/updateTeacher",
+    async ({ email, teacher }: { email: string; teacher: TeacherModel }, { dispatch, rejectWithValue }) => {
+        try {
+            const response = await api.put(`/Teacher/update/${email}`, teacher);
+            dispatch(getTeachers()); // Fetch updated teacher list
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data || "Failed to update teacher");
+        }
+    }
+);
+
+
