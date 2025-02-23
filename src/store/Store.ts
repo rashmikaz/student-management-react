@@ -1,17 +1,12 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import StudentSlice from "../reducers/StudentSlice.ts";
+import TeacherSlice from "../reducers/TeacherSlice.ts";
 
-//
-// export const store = configureStore({
-//     reducer: {
-//       student:StudentSlice,
-//     },
-// });
-// export type AppDispatch = typeof store.dispatch;
 
 const rootReducer = combineReducers({
     students: StudentSlice,
-    //items: ItemSlice,
+    teachers: TeacherSlice,
+
 })
 
 export const store = configureStore({
