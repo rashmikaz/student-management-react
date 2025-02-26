@@ -8,7 +8,7 @@ const api = axios.create({
     baseURL: "http://localhost:3000/",
 });
 
-// ✅ Fetch all customers
+//  Fetch all customers
 export const getStudents = createAsyncThunk(
     "student/getStudents",
     async (_, { rejectWithValue }) => {
@@ -21,7 +21,7 @@ export const getStudents = createAsyncThunk(
     }
 );
 
-// ✅ Add new customer and refresh list
+//  Add customer and refresh list
 export const saveStudent = createAsyncThunk(
     "student/saveStudent",
     async (student: StudentModel, { dispatch, rejectWithValue }) => {
@@ -35,7 +35,7 @@ export const saveStudent = createAsyncThunk(
     }
 );
 
-// ✅ Update customer and refresh list
+//  Update customer and refresh list
 export const updatedStudent = createAsyncThunk(
     "student/updateStudent",
     async ({ email, student }: { email: string; student: StudentModel }, { dispatch, rejectWithValue }) => {
@@ -49,7 +49,7 @@ export const updatedStudent = createAsyncThunk(
     }
 );
 
-// ✅ Delete customer and refresh list
+//  Delete customer and refresh list
 export const deletedStudent = createAsyncThunk(
     "student/deleteStudent",
     async (email: string, { dispatch, rejectWithValue }) => {
