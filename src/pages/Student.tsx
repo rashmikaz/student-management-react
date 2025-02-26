@@ -14,22 +14,7 @@ import {StudentModel} from "../models/StudentModel.ts";
 import {AppDispatch} from "../store/Store.ts";
 
 function Student() {
-    // const [customers, setCustomers] = useState([
-    //   {
-    //     id: "C001",
-    //     name: "John Doe",
-    //     nic: "123456789V",
-    //     email: "john@example.com",
-    //     phone: "1234567890"
-    //   },
-    //   {
-    //     id: "C002",
-    //     name: "Jane Smith",
-    //     nic: "987654321X",
-    //     email: "jane@example.com",
-    //     phone: "0987654321"
-    //   }
-    // ])
+
     const dispatch = useDispatch<AppDispatch>();
     const students = useSelector(state => state.students);
 
