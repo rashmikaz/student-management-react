@@ -118,13 +118,18 @@ function User() {
                     create
                 </button>
             </div>
+
             <div className="flex justify-end">
                 <button
-                    onClick={handleAdd}
+                    onClick={}
                     className="bg-cyan-500 shadow-lg shadow-cyan-500/50 absolute right-151 bottom-60 "
                 >
                     login
                 </button>
+            </div>
+
+            <div>
+                <img src="src/assets/login.jpg" alt="" width="800" height="800"/>
             </div>
 
 
