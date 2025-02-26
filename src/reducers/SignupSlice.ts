@@ -26,10 +26,23 @@ export const saveUser = createAsyncThunk(
     async (user: SignuptModel, { dispatch, rejectWithValue }) => {
         try {
             const response = await api.post("/User/add", user);
-            dispatch(getUsers()); // Fetch updated customers list
+            dispatch(getUsers());
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data || "Failed to save user");
+        }
+    }
+);
+
+export const updatedUser = createAsyncThunk(
+    "user/updateUser",
+    async ({ email, user }: { email: string; user: SignuptModel }, { dispatch, rejectWithValue }) => {
+        try {
+            const response = await api.put(`/User/update/${email}`, user);
+            dispatch(getUsers());
+            return response.data;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data || "Failed to update user");
         }
     }
 );
