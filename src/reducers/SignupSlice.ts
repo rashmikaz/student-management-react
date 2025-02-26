@@ -1,6 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { SignuptModel } from "../models/SignupModel.ts";
 import axios from "axios";
+
 
 const initialState: SignuptModel[] = [];
 
@@ -46,3 +47,57 @@ export const updatedUser = createAsyncThunk(
         }
     }
 );
+
+export const deletedUser = createAsyncThunk(
+    "user/deleteUser",
+    async (email: string, { dispatch, rejectWithValue }) => {
+        try {
+            await api.delete(`/User/delete/${email}`);
+            dispatch(getUsers());
+            return email;
+        } catch (error: any) {
+            return rejectWithValue(error.response?.data || "Failed to delete user");
+        }
+    }
+);
+
+const SignupSlice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+
+            .addCase(getUsers.fulfilled, (_, action) => action.payload)
+            .addCase(getUsers.rejected, (state, action) => {
+                console.error("Error fetching users:", action.payload);
+            })
+
+
+            .addCase(saveUser.fulfilled, (state, action) => {
+                state.push(action.payload);
+            })
+            .addCase(saveUser.rejected, (state, action) => {
+                console.error("Error saving user:", action.payload);
+            })
+
+
+            .addCase(updatedUser.fulfilled, (state, action) => {
+                const index = state.findIndex((c) => c.email === action.payload.email);
+                if (index >= 0) state[index] = action.payload;
+            })
+            .addCase(updatedUser.rejected, (state, action) => {
+                console.error("Error updating user:", action.payload);
+            })
+
+
+            .addCase(deletedUser.fulfilled, (state, action) => {
+                return state.filter((user) => user.email !== action.payload);
+            })
+            .addCase(deletedUser.rejected, (state, action) => {
+                console.error("Error deleting user:", action.payload);
+            });
+    },
+});
+
+export default SignupSlice.reducer;
