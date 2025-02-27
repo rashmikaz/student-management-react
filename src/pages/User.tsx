@@ -1,57 +1,39 @@
+import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../store/Store.ts";
-import {useEffect, useState} from "react";
 import {UserModel} from "../models/UserModel.ts";
-import {
-    addUser,
-    deleteUser,
-    deletedUser,
-    getUsers,
-    saveUser,
-    updateUser,
-    updatedUser
-} from "../reducers/UserSlice.ts";
+import {registerUser} from "../reducers/UserSlice.ts";
+import {useNavigate} from "react-router";
 
 function User() {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-
-    useEffect(() => {
-        dispatch(getUsers());
-    }, [dispatch]);
-
-    const [id, setId] = useState("")
     const [name, setName] = useState("")
-    const [nic, setNic] = useState("")
     const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
     const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
 
+    const handleRegister = () => {
+        const user: UserModel = {email:email,password:password};
+        dispatch(registerUser(user));
+        resetForm()
+        navigate("/")
+    }
 
-    const handleAdd = () => {
-        if (!name || !nic || !email || !phone || !password) {
-            alert("All fields are required!")
-            return
-        }
-
-        const newUser = new UserModel(name, nic, email, phone, password);
-        dispatch(saveUser(newUser));
-        resetForm();
-
+    const getLogin = () => {
+        navigate("/")
     }
 
 
     const resetForm = () => {
-        setId("")
-        setName("")
-        setNic("")
-        setEmail("")
-        setPhone("")
-        setPassword("")
-        setIsEditing(false)
-    }
 
+        setName("")
+        setEmail("")
+        setPassword("")
+        setConfirmPassword("")
+
+    }
 
     return (
         <div>
@@ -74,14 +56,7 @@ function User() {
                         onChange={(e) => setName(e.target.value)}
                         className="border p-2 rounded"
                     />
-                    <input
-                        type="text"
-                        name="nic"
-                        placeholder="NIC"
-                        value={nic}
-                        onChange={(e) => setNic(e.target.value)}
-                        className="border p-2 rounded"
-                    />
+
                     <input
                         type="email"
                         name="email"
@@ -90,14 +65,7 @@ function User() {
                         onChange={(e) => setEmail(e.target.value)}
                         className="border p-2 rounded"
                     />
-                    <input
-                        type="text"
-                        name="phone"
-                        placeholder="Phone"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        className="border p-2 rounded"
-                    />
+
                     <input
                         type="password"
                         name="password"
@@ -106,13 +74,21 @@ function User() {
                         onChange={(e) => setPassword(e.target.value)}
                         className="border p-2 rounded"
                     />
+                    <input
+                        type="password"
+                        name="confirm password"
+                        placeholder="Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="border p-2 rounded"
+                    />
                 </div>
 
             </div>
 
             <div className="flex justify-end">
                 <button
-                    onClick={handleAdd}
+                    onClick={handleRegister}
                     className="bg-cyan-500 shadow-lg shadow-cyan-500/50 absolute right-165 bottom-60 "
                 >
                     create
@@ -121,7 +97,7 @@ function User() {
 
             <div className="flex justify-end">
                 <button
-                    onClick={}
+                    onClick={getLogin}
                     className="bg-cyan-500 shadow-lg shadow-cyan-500/50 absolute right-151 bottom-60 "
                 >
                     login

@@ -7,12 +7,11 @@ export const api = axios.create({
 api.interceptors.request.use(
     (config:any) => {
         if(!config?.url?.includes("/auth")){
-            const token = localStorage.getItem("jwt_token"); //access token eka return karai
-            config.headers["Authorization"] = `Bearer ${token}`; //all request waldi token eka yawimata
+            const token = localStorage.getItem("jwt_token");
+            config.headers["Authorization"] = `Bearer ${token}`;
         }
         return config;
     },
     (error)=>{
-        return Promise.reject(error); //Promis ekedi errors throw krana ekama sidu karai.api call waldi use
-    }
+        return Promise.reject(error);
 )
