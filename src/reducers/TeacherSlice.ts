@@ -64,13 +64,13 @@ const TeacherSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            //  Fetch customers
+
             .addCase(getTeachers.fulfilled, (_, action) => action.payload)
             .addCase(getTeachers.rejected, (state, action) => {
                 console.error("Error fetching teacher:", action.payload);
             })
 
-            //  Save customer
+
             .addCase(saveTeacher.fulfilled, (state, action) => {
                 state.push(action.payload);
             })
@@ -78,7 +78,7 @@ const TeacherSlice = createSlice({
                 console.error("Error saving teacher:", action.payload);
             })
 
-            //  Update customer
+
             .addCase(updatedTeacher.fulfilled, (state, action) => {
                 const index = state.findIndex((c) => c.email === action.payload.email);
                 if (index >= 0) state[index] = action.payload;
@@ -88,7 +88,7 @@ const TeacherSlice = createSlice({
                 console.error("Error updating teacher:", action.payload);
             })
 
-            //  Delete customer
+
             .addCase(deletedTeacher.fulfilled, (state, action) => {
                 return state.filter((teacher) => teacher.email !== action.payload);
             })

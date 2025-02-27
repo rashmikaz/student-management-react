@@ -13,7 +13,7 @@ export function RootLayout() {
 
     }
 
-    const title = routeTitles[location?.pathname] || "shop"
+    const title = routeTitles[location?.pathname] || ""
 
     return (
         <div className="flex h-screen">

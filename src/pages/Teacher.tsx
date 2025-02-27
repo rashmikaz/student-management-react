@@ -138,14 +138,14 @@ function Teacher() {
                 {isEditing ? (
                     <button
                         onClick={handleUpdate}
-                        className="bg-blue-500 text-white p-2 rounded mr-2"
+                        className="bg-cyan-500 shadow-lg shadow-cyan-500/50"
                     >
                         Update
                     </button>
                 ) : (
                     <button
                         onClick={handleAdd}
-                        className="bg-green-500 text-white p-2 rounded mr-2"
+                        className="bg-cyan-500 shadow-lg shadow-cyan-500/50"
                     >
                         Add
                     </button>
@@ -168,9 +168,9 @@ function Teacher() {
                     <th className="border px-4 py-2">NIC</th>
                     <th className="border px-4 py-2">Email</th>
                     <th className="border px-4 py-2">Phone</th>
-                    <th className="border px-4 py-2">Email</th>
                     <th className="border px-4 py-2">Address</th>
                     <th className="border px-4 py-2">Subject</th>
+                    <th className="border px-4 py-2">Actions</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -6,6 +6,7 @@ import Student from "./pages/Student"
 import Teacher from "./pages/Teacher"
 import Payment from "./pages/Payment"
 import {Login} from "./pages/Login"
+import User from "./pages/User.tsx"
 
 
 
@@ -16,13 +17,18 @@ function App() {
             element:<Login />
         },
         {
+            path: "/signup",
+            element: <User />
+        },
+        {
             path: "",
-            element: <RootLayout />,
+            element: <RootLayout/>,
             children: [
                 { path: "/dashboard", element: <Dashboard /> },
                 { path: "/student", element:<Student />},
                 { path: "/teacher", element:<Teacher />},
                 { path: "/payment", element:<Payment />}
+
             ]
         }
     ])

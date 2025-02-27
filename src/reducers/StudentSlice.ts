@@ -8,7 +8,7 @@ const api = axios.create({
     baseURL: "http://localhost:3000/",
 });
 
-//  Fetch all customers
+
 export const getStudents = createAsyncThunk(
     "student/getStudents",
     async (_, { rejectWithValue }) => {
@@ -21,7 +21,7 @@ export const getStudents = createAsyncThunk(
     }
 );
 
-//  Add customer and refresh list
+
 export const saveStudent = createAsyncThunk(
     "student/saveStudent",
     async (student: StudentModel, { dispatch, rejectWithValue }) => {
@@ -35,7 +35,7 @@ export const saveStudent = createAsyncThunk(
     }
 );
 
-//  Update customer and refresh list
+
 export const updatedStudent = createAsyncThunk(
     "student/updateStudent",
     async ({ email, student }: { email: string; student: StudentModel }, { dispatch, rejectWithValue }) => {
@@ -49,7 +49,7 @@ export const updatedStudent = createAsyncThunk(
     }
 );
 
-//  Delete customer and refresh list
+
 export const deletedStudent = createAsyncThunk(
     "student/deleteStudent",
     async (email: string, { dispatch, rejectWithValue }) => {
@@ -69,13 +69,13 @@ const StudentSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // ✅ Fetch customers
+
             .addCase(getStudents.fulfilled, (_, action) => action.payload)
             .addCase(getStudents.rejected, (state, action) => {
                 console.error("Error fetching students:", action.payload);
             })
 
-            // ✅ Save customer
+
             .addCase(saveStudent.fulfilled, (state, action) => {
                 state.push(action.payload);
             })
@@ -83,7 +83,7 @@ const StudentSlice = createSlice({
                 console.error("Error saving customer:", action.payload);
             })
 
-            // ✅ Update customer
+
             .addCase(updatedStudent.fulfilled, (state, action) => {
                 const index = state.findIndex((c) => c.email === action.payload.email);
                 if (index >= 0) state[index] = action.payload;
@@ -92,7 +92,7 @@ const StudentSlice = createSlice({
                 console.error("Error updating customer:", action.payload);
             })
 
-            // ✅ Delete customer
+
             .addCase(deletedStudent.fulfilled, (state, action) => {
                 return state.filter((student) => student.email !== action.payload);
             })

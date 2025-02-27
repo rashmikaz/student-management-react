@@ -18,6 +18,7 @@ function Student() {
     const dispatch = useDispatch<AppDispatch>();
     const students = useSelector(state => state.students);
 
+
     useEffect(() => {
         dispatch(getStudents());
     }, [dispatch]);
@@ -34,17 +35,15 @@ function Student() {
             alert("All fields are required!")
             return
         }
-        // setCustomers([...customers, { id, name, nic, email, phone }])
+
         const newStudent = new StudentModel(name, nic, email, phone);
-        // dispatch(addCustomer(newCustomer));
         dispatch(saveStudent(newStudent));
-        //alert("customer added successfully!")
         resetForm();
 
     }
 
     const handleEdit = (student: StudentModel) => {
-        // setId(customer.id)
+
         setName(student.name)
         setNic(student.nic)
         setEmail(student.email)
@@ -85,14 +84,6 @@ function Student() {
     return (
         <div className="p-6">
             <div className="grid grid-cols-2 gap-4 mb-4">
-                {/*<input*/}
-                {/*    type="text"*/}
-                {/*    name="id"*/}
-                {/*    placeholder="ID"*/}
-                {/*    value={id}*/}
-                {/*    onChange={(e) => setId(e.target.value)}*/}
-                {/*    className="border p-2 rounded"*/}
-                {/*/>*/}
                 <input
                     type="text"
                     name="name"
@@ -130,14 +121,14 @@ function Student() {
                 {isEditing ? (
                     <button
                         onClick={handleUpdate}
-                        className="bg-blue-500 text-white p-2 rounded mr-2"
+                        className="bg-cyan-500 shadow-lg shadow-cyan-500/50"
                     >
                         Update
                     </button>
                 ) : (
                     <button
                         onClick={handleAdd}
-                        className="bg-green-500 text-white p-2 rounded mr-2"
+                        className="bg-cyan-500 shadow-lg shadow-cyan-500/50"
                     >
                         Add
                     </button>
